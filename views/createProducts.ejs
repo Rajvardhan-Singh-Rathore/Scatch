@@ -1,0 +1,41 @@
+<div class="w-full h-screen flex text-white bg-zinc-900">
+    <% if( error.length>0 && error){ %>
+        <div class="p-3 absolute top-5 bg-indigo-500 font-semibold rounded-md left-1/2">
+            <span class="inline-block">
+                <%= error[0] %>
+            </span>
+        </div>
+    <% }else if(success.length>0 && success){%>
+        <div class="p-3 absolute top-5 bg-indigo-500 font-semibold rounded-md left-1/2">
+            <span class="inline-block">
+                <%= success[0] %>
+            </span>
+        </div>
+    <%}%>
+    <div class="px-6 py-16 w-1/4 whitespace-nowrap flex flex-col gap-2">
+        <h3>All Products</h3>
+        <h3>Create new product</h3>
+    </div>
+    <div class="flex flex-col py-32">
+        <div class="flex flex-col gap-4">
+            <h1 class="font-semibold mb-1 text-5xl text-indigo-600">Create New Product</h1>
+            <h3 class="font-semibold text-3xl text-blue-500 pl-3">Product Details</h3>
+            <h4 class="font-semibold text-2xl pl-5">Product Image</h4>
+        </div>
+        <form action="/products/create" method="post" enctype="multipart/form-data" class="pl-5">
+            <input type="file" value="Choose file"name="image"class="block mb-6 mt-4 rounded-full border-solid border-[3px] border-[#252525] font-semibold text-md"></input>
+            <span class="grid grid-cols-3 divide-x-4 divide-dashed divide-indigo-500 bg-[#252525] rounded-lg">
+                <input type="text" placeholder="Product Name"name="name"class="outline-none bg-transparent text-center text-xl p-2"></input>
+                <input type="text" placeholder="Product Price"name="price"class="outline-none bg-transparent text-center text-xl p-2"></input>
+                <input type="text" placeholder="Discount Price"name="discount"class="outline-none bg-transparent text-center text-xl p-2"></input>
+            </span>
+            <h3 class="font-[450] mt-4 mb-2 text-2xl">Panel Details</h3>
+            <span class="grid grid-cols-3 divide-x-4 divide-dashed divide-indigo-500 bg-[#252525] rounded-lg">
+                <input type="text" placeholder="Backgtound color"name="bgcolor"class="outline-none bg-transparent text-center p-2"></input>
+                <input type="date" name="date"class="outline-none bg-transparent text-center p-2 text-zinc-400"></input>
+                <input type="text" placeholder="stock"name="stock"class="outline-none bg-transparent text-center p-2"></input>
+            </span>
+            <button type="submit" class="px-3 py-2 mt-10 text-xl text-zinc-100 bg-blue-600 rounded-lg font-semibold">Create Product</button>
+        </form>
+    </div>
+</div>

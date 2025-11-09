@@ -1,0 +1,37 @@
+{
+  "name": "myscatch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "build:css": "npx tailwindcss -i ./src/styles/main.css -o ./public/styles/main.css --minify",
+    "watch:css": "npx tailwindcss -i ./src/styles/main.css -o ./public/styles/main.css -w"
+  },
+  "keywords": [],
+  "author": "Rajvardhan Singh Rathore",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "config": "^4.1.1",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.7",
+    "debug": "^4.4.3",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.19.2",
+    "multer": "^2.0.2",
+    "path": "^0.12.7",
+    "session": "^0.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.15",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.15"
+  }
+}

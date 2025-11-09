@@ -1,0 +1,93 @@
+<style>
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;             /* Chrome, Safari */
+  }
+</style>
+<div class="w-full h-screen p-10 bg-zinc-900 flex flex-col justify-center">
+    <div class="p-6 -translate-y-[7.2rem] z-10 flex items-center justify-between text-zinc-200 ">
+        <div>
+            <h3 class="text-2xl">Scatch</h3>
+        </div>
+        <div class="navigation flex gap-8 items-center text-lg mr-3">
+            <a href="/products">Shop</a>
+            <a href="/cart">Cart</a>
+            <a>My Account</a>
+            <span class="text-red-400"><a href="/users/logout">Logout</a></span>
+        </div>
+    </div>
+    <div class="flex flex-col gap-3 items-center justift-center w-[95%] h-[50vh] bg-zinc-800 rounded-md self-center overflow-auto hide-scrollbar">
+        <%user.cart.forEach((product)=>{%>
+            <div class="w-full flex gap-3">
+            <div class="card h-[355px] flex-col rounded-md overflow-hidden">
+                <div class="bg-[#b8b8b8] w-full h-[63%] ">
+                    <img src="data:image/jpeg;base64,<%=product.image.toString("base64")%>" class="w-full h-full object-cover"></img>
+                </div>
+                <div class="bg-[#343434] w-full h-[19%] flex items-center justify-between px-5 py-4">
+                    <h3 class="text-[1.6rem] font-semibold text-white"><%=product.name%></h3>
+                    <div class="flex gap-2 items-center justify-center bg-transparent overflow-hidden ml-1">
+                        <button class="w-[2rem] h-[2rem] bg-white rounded-full text-lg"onclick="dec()"><i class="ri-subtract-line"></i></button>
+                        <div class="w-[2rem] h-[2rem] bg-white flex items-center justify-center text-xl rounded-lg">
+                            <h5 class="quantity">0</h5>
+                        </div>
+                        <button class="w-[2rem] h-[2rem] bg-white rounded-full text-lg"onclick="inc()"><i class="ri-add-large-line"></i></button>
+                    </div>
+                </div>
+                <div class="bg-[#545454] w-full h-[16%] px-6 py-4 flex justify-between text-xl font-semibold text-white rounded-b-md">
+                    <h4>Net Total</h4>
+                    <h4>₹ 1131</h4>
+                </div>
+            </div>
+
+            <div class="p-7 flex flex-col h-[100%] w-[70%] text-white rounded-lg">
+                <h3 class="text-2xl">Price Breakdown</h3>
+                <div class="flex flex-col gap-1 w-[70%] p-4 text-xl">
+                    <div class="flex justify-between">
+                        <h5>Total MRP</h5>
+                        <h5>₹<%=product.price%></h5>
+                    </div>
+                    <div class="flex justify-between">
+                        <h5>Discount on MRP</h5>
+                        <h5>₹ 0</h5>
+                    </div>
+                    <div class="flex justify-between">
+                        <h5>GST 18 Percent </h5>
+                        <h5>₹ <%=0.18*product.price%></h5>
+                    </div>
+                    <div class="flex justify-between">
+                        <h5>Shipping Fee</h5>
+                        <h5>Free</h5>
+                    </div>
+                </div>
+                <hr class="mt-2">
+                <div class="flex justify-between w-[70%] mt-2 text-2xl">
+                    <h3>Total Amount</h3>
+                    <h3 class="text-blue-500 font-semibold">₹ <%=product.price+0.18*product.price%></h3>
+                </div>
+            </div>
+            </div>
+        <%})%>
+        
+    </div>
+    <div class="px-10 flex items-center justify-between text-2xl relative top-20 rounded-full font-semibold">
+        <div class="justify-between flex gap-3">
+            <h3>Total Amount - </h3>
+            <div class="total text-blue-500">₹ <%=Sum%></div>
+        </div>
+        <button class="px-4 py-3 bg-blue-500 rounded-full">Checkout</button>
+    </div>
+</div>
+<script>
+    let quantity = document.querySelector(".quantity");
+    let inc = function(){
+        quantity.innerText=parseInt(quantity.innerText)+1;
+    }
+    let dec = function(){
+        if(quantity.innerText>0){
+            quantity.innerText=parseInt(quantity.innerText)-1;
+        }
+    }
+</script>

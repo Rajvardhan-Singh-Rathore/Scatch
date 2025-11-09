@@ -1,0 +1,30 @@
+<div class="main relative p-10  bg-zinc-900 flex gap-20 items-center justify-center w-full h-screen text-white">
+    <% if(error.length>0 && error){ %>
+        <div class="p-3 absolute top-5 bg-indigo-500 font-semibold rounded-md -translate-x-[60%]">
+            <span class="inline-block">
+                <%= error[0] %>
+            </span>
+        </div>
+    <% } %>
+        <div class="p-2 absolute top-0 right-0 mt-10 mr-10 ">
+            <button class="hidden"<%onClick=()=>(Mode=!Mode)%>><i class="ri-contrast-2-line"></i></button>
+        </div>
+        <div class="px-6 py-7 w-1/3 flex flex-col gap-3 rounded-[2%]">
+            <h1 class="text-4xl">Welcome to <span class="text-blue-500">Scatch</span></h1>
+            <h3 class="text-2xl -translate-y-3 translate-x-1 text-zinc-200">create your account</h3>
+            <form class="flex flex-col gap-3" action="/users/register" method="post">
+                <input class="px-4 py-3 rounded-md bg-[#252525] outline-none" placeholder="Fullname" name="fullname"></input>
+                <input class="px-4 py-3 rounded-md bg-[#252525] outline-none" placeholder="Email" name="email"></input>
+                <input class="px-4 py-3 rounded-md bg-[#252525] outline-none" placeholder="Password" name="password"></input>
+                <input class="px-4 py-3 pl-1 pr-1 mt-3 w-1/3 whitespace-nowrap rounded-full bg-blue-400 text-lg" type="submit" value="Register"></input>
+            </form>
+        </div>
+        <div class="px-6 py-7 w-1/3   flex flex-col gap-3 rounded-[2%]">
+            <h3 class="text-4xl -translate-y-3 translate-x-1 text-zinc-200">Login your account</h3>
+            <form class="flex flex-col gap-3" action="/users/login" method="post">
+                <input type="email" class="px-4 py-3 rounded-md bg-[#252525] outline-none" placeholder="Email" name="email"></input>
+                <input type="password" class="px-4 py-3 rounded-md bg-[#252525] outline-none" placeholder="Password" name="password"></input>
+                <input class="px-4 py-3 pl-2 pr-2 mt-2 w-1/3 whitespace-nowrap rounded-full bg-blue-500" type="submit" value="Login"></input>
+            </form>
+        </div>
+    </div>

@@ -1,0 +1,78 @@
+<div class="main w-full min-h-[100vh] bg-zinc-900 flex flex-col">
+    <% if(error.length>0 && error){ %>
+        <div class="p-3 absolute top-5 bg-indigo-500 font-semibold rounded-md -translate-x-[60%]">
+            <span class="inline-block text-4xl">
+                <%= error[0] %>
+            </span>
+        </div>
+    <% }else if(success.length>0 && success){%>
+        <div class="p-3 absolute top-5 bg-indigo-500 font-semibold rounded-md left-1/2">
+            <span class="inline-block">
+                <%= success[0] %>
+            </span>
+        </div>
+    <%}%>
+    <div class="p-6 z-10 flex items-center justify-between text-zinc-200 ">
+        <div>
+            <h3 class="text-2xl">Scatch</h3>
+        </div>
+        <div class="navigation flex gap-8 items-center text-lg mr-3">
+            <a href="/products">Shop</a>
+            <a href="/cart">Cart</a>
+            <a>My Account</a>
+            <span class="text-red-400"><a href="/users/logout">Logout</a></span>
+        </div>
+    </div>
+    <div class="body flex gap-3">
+        <div class="p-20 w-1/3 h-[88vh] flex flex-col gap-14 -mt-10 justify center text-white">
+            <div class="sort flex flex gap-2 items-center">
+                <h5 class="text-xl">sort by</h5>
+                <select class="rounded-lg bg-[#484848] px-3 py-2 text-center">
+                    <option>Popular</option>
+                    <option>low to high</option>
+                    <option>high to low</option>
+                    <option>Newest</option>
+                </select>
+            </div>
+            <div class="flex flex-col gap-2">
+                <h4>New Products</h4>
+                <h4>All Products</h4>
+                <h4>Discounted Products</h4>
+            </div>
+            <div class="filter flex flex gap-2 items-center">
+                <h5 class="text-xl">Filter</h5>
+                <select class="rounded-lg bg-[#484848] px-3 py-2 text-center">
+                    <option>Men</option>
+                    <option>Women</option>
+                    <option>discount</option>
+                    <option>Availability</option>
+                </select>
+            </div>
+            <div class="w-full rounded-lg bg-emerald-600 translate-y-2">
+                <div class="picture bg-zinc-700 w-full rounded-lg overflow-hidden">
+                    <video class="rounded-lg" width="full" loop autoplay muted>
+                        <source src="https://cdn.dribbble.com/userupload/15349717/file/original-af7abd3db4976150ee8b344d9c288497.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+    </div>
+    <div class="w-full max-h-[34.375rem] overflow-auto p-4 mr-2 flex gap-5 flex-wrap rounded-lg text-white">
+        <%products.forEach((product)=>{%>
+            <div class="card bg-zinc-800 w-[21rem] h-64 p-2 rounded-lg overflow-hidden">
+                <div class="h-44 rounded-lg pb-4 " style="background-color:<%= product.bgcolor %>">
+                    <img src="data:image/jpeg;base64,<%=product.image.toString("base64")%>" class="w-full h-full object-cover"></img>
+                </div>
+                <div class="box p-2 flex gap-5 items-center justify-center">
+                    <div class="flex flex-col">
+                        <h3 class="innerBox1"><%=product.name%></h3>
+                        <h3>₹ <%=product.price%></h3>
+                    </div>
+                    <div class="innerBox2">
+                        <a href="/addtocart/<%=product._id%>" class="px-3 py-2 bg-[#343132] rounded">Add to cart <i class="ri-shopping-cart-fill"></i></a>
+                    </div>
+                </div>
+            </div>
+        <%})%>
+    </div>
+    </div>
+</div>
