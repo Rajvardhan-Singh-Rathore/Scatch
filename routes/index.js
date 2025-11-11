@@ -28,6 +28,7 @@ router.get("/cart",isLoggedIn,async function(req,res){
     }
     res.render("cart",{user,Sum});
 });
+
 router.get("/address",isLoggedIn,function(req,res){
     res.render("address");
 })

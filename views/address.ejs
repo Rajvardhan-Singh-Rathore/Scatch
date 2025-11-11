@@ -1,5 +1,51 @@
-<div class="w-full h-screen bg-zinc-900">
-    <form>
-        
+<div class="w-full h-screen bg-zinc-900 p-10 flex flex-col items-center justify-center">
+    <% if( error.length>0 && error){ %>
+        <div class="p-3 absolute top-5 bg-indigo-500 font-semibold rounded-md left-1/2">
+            <span class="inline-block">
+                <%= error[0] %>
+            </span>
+        </div>
+    <% }else if(success.length>0 && success){%>
+        <div class="p-3 absolute top-5 bg-indigo-500 font-semibold rounded-md left-1/2">
+            <span class="inline-block">
+                <%= success[0] %>
+            </span>
+        </div>
+    <%}%>
+    <h1 class="font-semibold text-4xl text-indigo-600 mb-5">Add your address</h1>
+    <form class="container flex flex-col gap-5 p-2"method="post" action="/address/create">
+        <input type="text" placeholder="Full name"name="fullname"class="outline-none bg-[#252525] rounded-lg text-center text-xl p-2"></input>
+        <input type="text" placeholder="Address Line1"name="address1"class="outline-none bg-[#252525] rounded-lg text-center text-xl p-2"></input>
+        <input type="text" placeholder="Address Line2"name="address2"class="outline-none bg-[#252525] rounded-lg text-center text-xl p-2"></input>
+        <span class="grid grid-cols-3 divide-x-4 divide-dashed divide-indigo-500 bg-[#252525] rounded-lg">
+            <input type="text" placeholder="House Name"name="housename"class="outline-none bg-transparent text-center text-xl p-2"></input>
+            <input type="text" placeholder="House number"name="housenumber"class="outline-none bg-transparent text-center text-xl p-2"></input>
+            <input type="text" placeholder="Landmark"name="landmark"class="outline-none bg-transparent text-center text-xl p-2"></input>
+        </span>
+        <span class="grid grid-cols-3 divide-x-4 divide-dashed divide-indigo-500 bg-[#252525] rounded-lg">
+            <select placeholder="Country" name="country" class="rounded-md px-2 py-3 bg-[#252525]">
+            <option value="India">India</option>
+            </select>
+            <select placeholder="State"name = "state" class="rounded-md px-2 py-3 bg-[#252525]">
+            <option value="Madhya pradesh">Madhya pradesh</option>
+            <option value="Chattisgarh">Chattisgarh</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Jammu&Kashmir">Jammu&Kashmir</option>
+            <option value="GOA">GOA</option>
+            <option value="Kerala">Kerala</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Uttar pradesh">Uttar pradesh</option>
+            <option value="Bihar">Bihar</option>
+            <option value="West Bengal">West Bengal</option>
+            <option value="Jharkhand">Jharkhand</option>
+            <option value="Himachal Pradesh">Himachal Pradesh</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            </select>
+            <input type="number" placeholder="Pincode"name="pincode"class="outline-none bg-transparent text-center text-xl p-2"></input>
+        </span>
+        <input type="number" placeholder="Reciever phone no."name="mobile"class="outline-none bg-[#252525] rounded-lg text-center text-xl p-2"></input>
+        <button type="submit" class="w-1/4 self-center px-3 py-2 mt-5 text-xl text-zinc-100 bg-blue-600 rounded-lg font-semibold">Add Address</button>
     </form>
 </div>
