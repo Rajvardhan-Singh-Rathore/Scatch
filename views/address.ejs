@@ -1,4 +1,4 @@
-<div class="w-full h-screen bg-zinc-900 p-10 flex flex-col items-center justify-center">
+<div class="w-full h-screen bg-zinc-900 p-10 flex flex-col items-center justify-center text-white">
     <% if( error.length>0 && error){ %>
         <div class="p-3 absolute top-5 bg-indigo-500 font-semibold rounded-md left-1/2">
             <span class="inline-block">
@@ -13,7 +13,7 @@
         </div>
     <%}%>
     <h1 class="font-semibold text-4xl text-indigo-600 mb-5">Add your address</h1>
-    <form class="container flex flex-col gap-5 p-2"method="post" action="/address/create">
+    <form class="container flex flex-col gap-5 p-2"method="post" action="#">
         <input type="text" placeholder="Full name"name="fullname"class="outline-none bg-[#252525] rounded-lg text-center text-xl p-2"></input>
         <input type="text" placeholder="Address Line1"name="address1"class="outline-none bg-[#252525] rounded-lg text-center text-xl p-2"></input>
         <input type="text" placeholder="Address Line2"name="address2"class="outline-none bg-[#252525] rounded-lg text-center text-xl p-2"></input>
@@ -46,6 +46,60 @@
             <input type="number" placeholder="Pincode"name="pincode"class="outline-none bg-transparent text-center text-xl p-2"></input>
         </span>
         <input type="number" placeholder="Reciever phone no."name="mobile"class="outline-none bg-[#252525] rounded-lg text-center text-xl p-2"></input>
-        <button type="submit" class="w-1/4 self-center px-3 py-2 mt-5 text-xl text-zinc-100 bg-blue-600 rounded-lg font-semibold">Add Address</button>
+        <button type="button" class="pay w-1/4 self-center px-3 py-2 mt-5 text-xl text-zinc-100 bg-blue-600 rounded-lg font-semibold">Add Address</button>
     </form>
 </div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    let button = document.querySelector(".pay");
+    button.onclick = async function(event){
+        event.preventDefault();
+        await fetch("/address/create",{
+            method: "POST",
+            headers:{"content-type":"application/x-www-form-urlencoded"},
+            body: new URLSearchParams(new FormData(document.querySelector("form")))
+        });
+
+        var amount = <%= Sum * 100 %>;
+        const key = "<%= process.env.RAZORPAY_KEY_ID %>";
+        
+        const orderRes = await fetch("/checkout/create-order",{
+            method:"POST",
+            headers:{"content-type":"application/json"},
+            body: JSON.stringify({amount})
+        });
+
+        if (!orderRes.ok) {
+            const text = await orderRes.text();
+            console.error("Order creation failed:", text);
+            alert("Error creating order. Check server logs.");
+            return;
+        }
+
+        const order = await orderRes.json();
+
+        var options = {
+            key: key,
+            amount: amount,
+            currency : "INR",
+            name : "Scatch",
+            description : "Premium Shoes",
+            order_id : order.id,
+            handler : async(response)=>{
+                const verify = await fetch("/checkout/verify-payment",{
+                    method:"POST",
+                    headers:{"content-type":"application/json"},
+                    body: JSON.stringify(response)
+                });
+                if(verify.ok){
+                    alert("Payment verification Successful");
+                }else{
+                    alert("Payment verification failed");
+                }
+            },
+            theme : {color:"#3399cc"}
+        }
+        const rzp1 = new Razorpay(options);
+        rzp1.open();
+    };
+</script>

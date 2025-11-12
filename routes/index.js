@@ -20,17 +20,25 @@ router.get("/addtocart/:productid",isLoggedIn,async function(req,res){
     res.redirect("/products");
 });
 router.get("/cart",isLoggedIn,async function(req,res){
-    let user = await userModel.findOne({email:req.user.email})
-    .populate("cart");
+    if (!req.user) {
+        return res.redirect("/login");
+    }
+    let user = await userModel.findOne({ email: req.user.email }).populate("cart");
     Sum=0;
     for(i=0;i<user.cart.length;i++){
         Sum+=parseInt((user.cart[i].price+0.18*user.cart[i].price));
     }
+    req.session.Sum = Sum;
     res.render("cart",{user,Sum});
 });
 
 router.get("/address",isLoggedIn,function(req,res){
-    res.render("address");
+    const Sum = Number(req.session.Sum)||0;
+    if (!Sum) {
+        req.flash("error", "Please review your cart before checkout.");
+        return res.redirect("/cart");
+    }
+    res.render("address", { Sum: Sum });
 })
 
 module.exports = router;

@@ -9,6 +9,6 @@ router.post("/create",isLoggedIn,function(req,res){
         fullname,address1,address2,housename,housenumber,landmark,country,state,pincode,mobile
     });
     req.flash("success","Address added successfully");
-    res.render("address");
+    res.redirect("/checkout"); 
 })
 module.exports = router;

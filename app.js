@@ -7,6 +7,7 @@ const ownersRouter = require("./routes/ownersRouter");
 const usersRouter = require("./routes/usersRouter");
 const productsRouter = require("./routes/productsRouter");
 const addressRouter = require("./routes/addressRouter");
+const checkoutRouter = require("./routes/checkoutRouter");
 const db = require("./config/mongoose-connection");
 const expressSession = require("express-session");
 const flash = require("connect-flash");
@@ -39,5 +40,6 @@ app.use("/owners",ownersRouter);
 app.use("/users",usersRouter);
 app.use("/products",productsRouter);
 app.use("/address",addressRouter);
+app.use("/checkout",checkoutRouter);
 
 app.listen(3000);
