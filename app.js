@@ -12,6 +12,7 @@ const db = require("./config/mongoose-connection");
 const expressSession = require("express-session");
 const flash = require("connect-flash");
 const expressLayouts = require("express-ejs-layouts");
+const passport = require("passport");
 
 require("dotenv").config();  
 app.use(expressLayouts);
@@ -25,9 +26,13 @@ app.use(
     expressSession({
         secret:process.env.JWT_KEY,
         resave:false,
-        saveUninitialized:false
+        saveUninitialized:false,
+        cookie: { secure: false }
     })
 )
+require("./config/passport");
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 app.use((req,res,next)=>{
     res.locals.error = req.flash("error");

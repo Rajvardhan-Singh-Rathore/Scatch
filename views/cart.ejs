@@ -20,25 +20,25 @@
         </div>
     </div>
     <div class="flex flex-col gap-3 items-center justift-center w-[95%] h-[50vh] bg-zinc-800 rounded-md self-center overflow-auto hide-scrollbar">
-        <%user.cart.forEach((product)=>{%>
-            <div class="w-full flex gap-3">
-            <div class="card h-[355px] flex-col rounded-md overflow-hidden">
+        <%user.cart.forEach((product,i)=>{%>
+            <div class="card<%=i%> w-full flex gap-3">
+            <div class="h-[355px] flex-col rounded-md overflow-hidden">
                 <div class="bg-[#252525] w-full h-[63%] ">
                     <img src="data:image/jpeg;base64,<%=product.image.toString("base64")%>" class="w-full h-full object-cover"></img>
                 </div>
                 <div class="bg-[#343434] w-full h-[19%] flex items-center justify-between px-5 py-4">
                     <h3 class="text-[1.6rem] font-semibold text-white"><%=product.name%></h3>
                     <div class="flex gap-2 items-center justify-center bg-transparent overflow-hidden ml-1">
-                        <button class="w-[2rem] h-[2rem] bg-white rounded-full text-lg"onclick="dec()"><i class="ri-subtract-line"></i></button>
+                        <button class="w-[2rem] h-[2rem] bg-white rounded-full text-lg"onclick="dec('<%- product._id %>', <%- JSON.stringify(i) %>)"><i class="ri-subtract-line"></i></button>
                         <div class="w-[2rem] h-[2rem] bg-white flex items-center justify-center text-xl rounded-lg">
-                            <h5 class="quantity">0</h5>
+                            <h5 class="quantity<%=i%>">1</h5>
                         </div>
-                        <button class="w-[2rem] h-[2rem] bg-white rounded-full text-lg"onclick="inc()"><i class="ri-add-large-line"></i></button>
+                        <button class="w-[2rem] h-[2rem] bg-white rounded-full text-lg"onclick="inc('<%- product._id %>',<%= i %>)"><i class="ri-add-large-line"></i></button>
                     </div>
                 </div>
                 <div class="bg-[#545454] w-full h-[16%] px-6 py-4 flex justify-between text-xl font-semibold text-white rounded-b-md">
                     <h4>Net Total</h4>
-                    <h4>₹ 1131</h4>
+                    <h4>₹ <%=product.price+0.18*product.price%></h4>
                 </div>
             </div>
 
@@ -81,13 +81,37 @@
     </div>
 </div>
 <script>
-    let quantity = document.querySelector(".quantity");
-    let inc = function(){
+    async function removeFromCart(productId,i) {
+        await fetch("/cart/remove", {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({  productId }),
+        });
+        document.querySelector(`.card${i}`).remove();
+        }
+    async function addToCart(productId,i) {
+        await fetch("/cart/add", {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({  productId }),
+        });
+        }
+    let inc = function(productId,i){
+        let quantity = document.querySelector(`.quantity${i}`);
         quantity.innerText=parseInt(quantity.innerText)+1;
+        addToCart(productId,i);
+        window.location.reload();
     }
-    let dec = function(){
-        if(quantity.innerText>0){
+    let dec = function(productId,i){
+        let quantity = document.querySelector(`.quantity${i}`);
+        if(quantity.innerText>1){
             quantity.innerText=parseInt(quantity.innerText)-1;
+            window.location.reload();
+        }else{
+            removeFromCart(productId,i);
+            window.location.reload();
         }
     }
 </script>

@@ -25,6 +25,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.2",
     "multer": "^2.0.2",
+    "passport": "^0.7.0",
     "path": "^0.12.7",
     "razorpay": "^2.9.6",
     "session": "^0.1.0"
