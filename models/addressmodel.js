@@ -15,7 +15,7 @@ const addressSchema = mongoose.Schema({
         required:true
     },
     housename:String,
-    housenumber:Number,
+    housenumber:String,
     landmark:String,
     country:{
         type:String,
@@ -28,7 +28,9 @@ const addressSchema = mongoose.Schema({
         required:true
     },
     pincode:Number,
-    mobile:Number
+    mobile:Number,
+    size:Number,
+    notes:String,
 });
 module.exports = mongoose.model("addres",addressSchema);
 
