@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
+    "start": "node app.js",
     "build:css": "npx tailwindcss -i ./src/styles/main.css -o ./public/styles/main.css --minify",
     "watch:css": "npx tailwindcss -i ./src/styles/main.css -o ./public/styles/main.css -w"
   },
